@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { ModalContext } from "./ModalContext";
 
 // 正中心正七邊形 SVG
 function DoublePolygonIcon({ className = "" }) {
@@ -19,13 +20,13 @@ function DoublePolygonIcon({ className = "" }) {
 }
 
 export default function FloatingButton() {
-  const [isOpen, setIsOpen] = useState(false);
+   const { openModal } = useContext(ModalContext);
 
   return (
     <>
       {/* SVG 按鈕 */}
       <button
-        onClick={() => setIsOpen(true)}
+        onClick={openModal}
         className="fixed bottom-16 right-6 z-50 w-24 h-24 lg:w-32 lg:h-32 bg-[#0E0E0E] text-white rounded-full flex items-center justify-center group"
       >
         <div className="relative w-20 h-20 lg:w-28 lg:h-28">
@@ -52,7 +53,7 @@ export default function FloatingButton() {
       </button>
 
       {/* Modal */}
-      {isOpen && (
+      {/* {isOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-[#3e3e3e] p-6 w-11/12 max-w-sm h-[560px] rounded-lg text-white">
             <h2 className="text-lg mb-4">Leave a Message</h2>
@@ -63,7 +64,7 @@ export default function FloatingButton() {
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </>
   );
 }
