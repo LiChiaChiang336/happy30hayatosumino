@@ -41,11 +41,11 @@
 
   /* 滾動條樣式 */
   ::-webkit-scrollbar {
-    width: 10px;
+    width: 6px;
   }
 
   ::-webkit-scrollbar-track {
-    background: #222; /* 變深一點更符合深色背景 */
+    background: #0e0e0e; /* 變深一點更符合深色背景 */
     border-radius: 4px;
   }
 
