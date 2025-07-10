@@ -45,7 +45,7 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: #0e0e0e; /* 變深一點更符合深色背景 */
+    background: #0e0e0e; 
     border-radius: 4px;
   }
 

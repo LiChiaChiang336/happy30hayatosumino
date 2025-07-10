@@ -17,9 +17,9 @@ export default function HeroNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const menuItems = [
-    { name: "Home", href: "/" },
-    { name: "Board", href: "/board" },
-    { name: "About", href: "/about" },
+    { name: "Home Page", href: "/" },
+    { name: "Star Board", href: "/board" },
+    { name: "Inspiration", href: "/about" },
   ];
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -34,7 +34,7 @@ export default function HeroNavbar() {
       <NavbarContent justify="start">
         <NavbarBrand>
           <Link href="/" color="foreground" className="font-bold text-2xl">
-            To Hayato Sumino
+            Happy 30 Hayato Sumino
           </Link>
         </NavbarBrand>
       </NavbarContent>
@@ -52,7 +52,7 @@ export default function HeroNavbar() {
 
       {/* 中間：桌機版選單置中 */}
       <NavbarContent
-        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden lg:flex gap-6"
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden lg:flex gap-14"
         justify="center"
       >
         {menuItems.map((item) => (
@@ -71,8 +71,8 @@ export default function HeroNavbar() {
 
       {/* 手機版展開菜單 */}
       {isMenuOpen && (
-        <div className="absolute top-full left-0 w-full bg-[#0E0E0E] lg:hidden">
-          <div className="flex flex-col items-center mt-4">
+        <div className="absolute top-full left-0 w-full bg-[#0E0E0E] lg:hidden mt-6">
+          <div className="flex flex-col items-center">
             {menuItems.map((item) => (
               <div key={item.name} className="px-4 py-2">
                 <Link
