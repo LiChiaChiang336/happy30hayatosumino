@@ -304,7 +304,7 @@ export default function ContentWithModal() {
               const safeMessage = escapeHtml(trimmedMessage);
 
               // 這裡可以送出 safeName 和 safeMessage
-              console.log("Submit:", safeName, safeMessage);
+              console.log(`Submit: safeName:${safeName}, safeMessage:${safeMessage}`);
             }}
             className="w-full px-4 py-2 bg-[#6760AB] rounded hover:bg-[#544DA1] text-sm md:text-xl"
           >
