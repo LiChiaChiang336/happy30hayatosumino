@@ -1,6 +1,6 @@
 import "./globals.css";
 import HeroNavbar from "@/components/HeroNavbar";
-import Footer from "@/components/footer";
+import Footer from "@/components/Footer";
 import FloatingButton from "@/components/FloatingButton";
 import { ModalProvider } from "@/components/ModalContext";
 import ContentWithModal from "@/components/ContentWithModal";
