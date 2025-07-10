@@ -7,7 +7,14 @@ import { collection, addDoc, serverTimestamp } from "firebase/firestore";
  */
 function sanitizeString(str) {
   return String(str).replace(/[<>&"'`]/g, (char) => {
-    const map = { "<": "&lt;", ">": "&gt;", "&": "&amp;", '"': "&quot;", "'": "&#39;", "`": "&#96;" };
+    const map = {
+      "<": "&lt;",
+      ">": "&gt;",
+      "&": "&amp;",
+      '"': "&quot;",
+      "'": "&#39;",
+      "`": "&#96;",
+    };
     return map[char] || char;
   });
 }
@@ -22,13 +29,40 @@ function getClientIp(request) {
     return forwarded.split(",")[0].trim();
   }
 
-  // 如果沒轉發，就取 socket 裡的 IP (Next.js 14 支援)
-  return request.ip || "unknown";
+  // 開發環境是 ::1 或 127.0.0.1
+  return process.env.NODE_ENV === "development" ? "127.0.0.1" : "unknown";
 }
 
 export async function POST(request) {
   try {
     const body = await request.json();
+
+    // 這整段都給 reCAPTCHA 驗證
+    const recaptchaToken = body.recaptchaToken;
+    if (!recaptchaToken) {
+      return Response.json(
+        { error: "Missing reCAPTCHA token" },
+        { status: 400 }
+      );
+    }
+
+    const secretKey = process.env.RECAPTCHA_SECRET_KEY;
+    const verifyRes = await fetch(
+      "https://www.google.com/recaptcha/api/siteverify",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `secret=${secretKey}&response=${recaptchaToken}`,
+      }
+    );
+
+    const verifyData = await verifyRes.json();
+
+    if (!verifyData.success) {
+      console.error("reCAPTCHA failed:", verifyData);
+      return Response.json({ error: "reCAPTCHA failed" }, { status: 400 });
+    }
+    // 這整段都給 reCAPTCHA 驗證
 
     // 防機器人：檢查 trap 欄位（honeypot）
     if (body.trap && body.trap.trim() !== "") {
@@ -42,8 +76,13 @@ export async function POST(request) {
     const starColor = sanitizeString(body.starColor || "");
     const ip = getClientIp(request);
 
-    if (!nickname || !message) {
+    // 資料驗證
+    if (!nickname.trim() || !message.trim()) {
       return Response.json({ error: "Missing fields" }, { status: 400 });
+    }
+    
+    if (starShape < 7 || starShape > 14) {
+      return Response.json({ error: "Invalid starShape" }, { status: 400 });
     }
 
     // 寫入 Firestore

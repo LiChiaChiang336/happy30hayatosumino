@@ -1,6 +1,12 @@
 "use client";
 
-export default function ResultModal({ isOpen, onClose, type }) {
+export default function ResultModal({
+  isOpen,
+  onClose,
+  type,
+  closeMainModal,
+  closeResultModal,
+}) {
   if (!isOpen) return null;
 
   return (
@@ -8,13 +14,16 @@ export default function ResultModal({ isOpen, onClose, type }) {
       <div className="bg-[#0e0e0e] shadow-[0_0_4px_rgba(0,0,0,0.8),0_0_20px_rgba(255,255,255,0.9)]  p-6 rounded-xl text-white w-80 text-center space-y-4">
         {type === "success" ? (
           <>
-            <p className="text-lg font-bold text-[#D0A760]">Message submitted successfully!</p>
+            <p className="text-lg font-bold text-[#D0A760]">
+              Message submitted successfully!
+            </p>
             <div className="flex justify-center gap-4">
               <button
                 className="px-4 py-2 bg-[#84B2DB] hover:bg-[#5B93C4]  rounded"
                 onClick={() => {
-                  onClose();
-                  window.location.href = "/"; // 回首頁
+                  closeResultModal(); // 關掉 ResultModal
+                  closeMainModal(); // 關掉留言 Modal
+                  window.location.href = "/"; // 去首頁
                 }}
               >
                 Home Page →
@@ -22,8 +31,9 @@ export default function ResultModal({ isOpen, onClose, type }) {
               <button
                 className="px-4 py-2 bg-[#6760AB] hover:bg-[#544DA1]  rounded"
                 onClick={() => {
-                  onClose();
-                  window.location.href = "/board"; // 去留言板
+                  closeResultModal();
+                  closeMainModal();
+                  window.location.href = "/board";
                 }}
               >
                 Star Board →
@@ -38,7 +48,7 @@ export default function ResultModal({ isOpen, onClose, type }) {
             </p>
             <button
               className="px-4 py-2 bg-[#6760AB] hover:bg-[#544DA1] text-sm md:text-xl  rounded mt-2"
-              onClick={onClose}
+              onClick={closeResultModal}
             >
               I understand
             </button>
