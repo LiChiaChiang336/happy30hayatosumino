@@ -3,6 +3,7 @@
 import { useState, useContext } from "react";
 import { ModalContext } from "./ModalContext";
 import Modal from "./Modal";
+import ResultModal from "./ResultModal";
 
 const getTodayString = () => {
   const today = new Date();
@@ -20,7 +21,9 @@ export default function ContentWithModal() {
   const [messageError, setMessageError] = useState(false); // 加入驗證狀態檢查message
   const escapeHtml = (str) => str.replace(/</g, "&lt;").replace(/>/g, "&gt;"); // 新增 escapeHtml 函數，防止 XSS
   const [trap, setTrap] = useState(""); // 防止機器人留言的假隱藏欄位
-  const [isSubmitting, setIsSubmitting] = useState(false); // 送出中狀態
+  const [isSubmitting, setIsSubmitting] = useState(false); // Submit button 送出中動畫狀態
+  const [showResultModal, setShowResultModal] = useState(false); // 送出成功或失敗的的 modal
+  const [resultType, setResultType] = useState("success"); // 送出成功或失敗的的 modal "success" or "alreadySubmitted"
 
   const colorOptions = [
     { hex: "#D0A760", name: "SOLARI" },
@@ -305,9 +308,8 @@ export default function ContentWithModal() {
 
               // 如果已經留言過
               if (storedDate === today) {
-                alert(
-                  "You’ve already submitted a message today. Please try again tomorrow!"
-                );
+                setResultType("alreadySubmitted");
+                setShowResultModal(true);
                 return;
               }
 
@@ -347,15 +349,19 @@ export default function ContentWithModal() {
                 console.log("API Response:", result);
 
                 if (result.success) {
-                  alert("Message submitted successfully!");
+                  // alert("Message submitted successfully!");
 
                   // 留言成功後，localStorage 記錄今天
                   localStorage.setItem("messageSubmitted", today);
                   setName("");
                   setMessage("");
-                  closeModal();
+                  // closeModal();
+                  setResultType("success");
+                  setShowResultModal(true);
                 } else {
-                  alert("Error: " + result.error);
+                  // alert("Error: " + result.error);
+                  setResultType("alreadySubmitted"); // 也可以根據錯誤訊息分類
+                  setShowResultModal(true);
                 }
               } catch (error) {
                 console.error("Error submitting message:", error);
@@ -394,13 +400,17 @@ export default function ContentWithModal() {
                     d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
                   ></path>
                 </svg>
-                
               </>
             ) : (
               "Submit"
             )}
           </button>
         </div>
+        <ResultModal
+          isOpen={showResultModal}
+          onClose={() => setShowResultModal(false)}
+          type={resultType}
+        />
       </div>
     </Modal>
   );
