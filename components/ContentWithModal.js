@@ -4,6 +4,11 @@ import { useState, useContext } from "react";
 import { ModalContext } from "./ModalContext";
 import Modal from "./Modal";
 
+const getTodayString = () => {
+  const today = new Date();
+  return today.toISOString().split("T")[0]; // "2025-07-10"
+};
+
 export default function ContentWithModal() {
   const { isOpen, closeModal } = useContext(ModalContext);
 
@@ -15,6 +20,7 @@ export default function ContentWithModal() {
   const [messageError, setMessageError] = useState(false); // 加入驗證狀態檢查message
   const escapeHtml = (str) => str.replace(/</g, "&lt;").replace(/>/g, "&gt;"); // 新增 escapeHtml 函數，防止 XSS
   const [trap, setTrap] = useState(""); // 防止機器人留言的假隱藏欄位
+  const [isSubmitting, setIsSubmitting] = useState(false); // 送出中狀態
 
   const colorOptions = [
     { hex: "#D0A760", name: "SOLARI" },
@@ -264,8 +270,8 @@ export default function ContentWithModal() {
           <hr className="border-[#D0A760] w-full " />
           <p className="font-bold text-sm md:text-lg text-[#D0A760] leading-relaxed break-words">
             ・Each person may leave{" "}
-            <span className="text-[#CB6947] font-black">only one message</span> to light up
-            the stars. Share your most heartfelt words.
+            <span className="text-[#CB6947] font-black">only one message</span>{" "}
+            to light up the stars. Share your most heartfelt words.
           </p>
           <p className="font-bold text-sm md:text-lg text-[#D0A760] leading-relaxed break-words">
             ・This is a public message board. We record only the number of
@@ -285,17 +291,29 @@ export default function ContentWithModal() {
         <div className="mt-4 flex gap-4 w-full max-w-xs ">
           <button
             onClick={closeModal}
-            className="w-full px-4 py-2 bg-gray-700 rounded text-sm md:text-xl "
+            className="w-36 px-4 py-2 bg-gray-700 rounded text-sm md:text-xl "
           >
             Cancel
           </button>
 
           {/* Submit 按鈕 onClick 新增驗證邏輯 */}
           <button
-            onClick={() => {
+            onClick={async () => {
+              // 這是要測試一天留言一次
+              const today = getTodayString();
+              const storedDate = localStorage.getItem("messageSubmitted");
+
+              // 如果已經留言過
+              if (storedDate === today) {
+                alert(
+                  "You’ve already submitted a message today. Please try again tomorrow!"
+                );
+                return;
+              }
+
+              // 原本的驗證
               const trimmedName = name.trim();
               const trimmedMessage = message.trim();
-
               if (!trimmedName) setNameError(true);
               if (!trimmedMessage) setMessageError(true);
               if (!trimmedName || !trimmedMessage) return;
@@ -303,12 +321,84 @@ export default function ContentWithModal() {
               const safeName = escapeHtml(trimmedName);
               const safeMessage = escapeHtml(trimmedMessage);
 
+              // 防止機器人 Honeypot 欄位被填
+              if (trap && trap.trim() !== "") {
+                console.warn("Bot detected, submission blocked.");
+                return;
+              }
+              try {
+                setIsSubmitting(true); // 按下去後變成送出中
+
+                const res = await fetch("/api/message", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    nickname: safeName,
+                    message: safeMessage,
+                    starShape: Number(sides),
+                    starColor: color,
+                    trap: trap,
+                  }),
+                });
+
+                const result = await res.json();
+                console.log("API Response:", result);
+
+                if (result.success) {
+                  alert("Message submitted successfully!");
+
+                  // 留言成功後，localStorage 記錄今天
+                  localStorage.setItem("messageSubmitted", today);
+                  setName("");
+                  setMessage("");
+                  closeModal();
+                } else {
+                  alert("Error: " + result.error);
+                }
+              } catch (error) {
+                console.error("Error submitting message:", error);
+                alert("Unexpected error, please try again later.");
+              } finally {
+                setIsSubmitting(false); // 無論成功或失敗，都把按鈕恢復
+              }
+
               // 這裡可以在submit送出時在console看 safeName 和 safeMessage
-              console.log(`Submit: safeName:${safeName}, safeMessage:${safeMessage}`);
+              // console.log(
+              //   `Submit: safeName:${safeName}, safeMessage:${safeMessage}`
+              // );
             }}
-            className="w-full px-4 py-2 bg-[#6760AB] rounded hover:bg-[#544DA1] text-sm md:text-xl"
+            disabled={isSubmitting}
+            className="w-36 px-4 py-2 bg-[#6760AB] rounded hover:bg-[#544DA1] text-sm md:text-xl flex justify-center items-center"
           >
-            Submit
+            {isSubmitting ? (
+              <>
+                <svg
+                  className="animate-spin h-6 w-6 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                  ></path>
+                </svg>
+                
+              </>
+            ) : (
+              "Submit"
+            )}
           </button>
         </div>
       </div>
