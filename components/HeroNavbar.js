@@ -28,7 +28,7 @@ export default function HeroNavbar() {
     <Navbar
       disableAnimation
       isBordered
-      className="fixed top-0 left-0 right-0 z-50 px-2 sm:px-4 py-4 bg-[#0E0E0E]"
+      className="fixed top-0 left-0 right-0 z-50 sm:px-2 py-4 bg-[#0E0E0E]"
     >
       {/* 左邊：網站名稱 */}
       <NavbarContent justify="start">

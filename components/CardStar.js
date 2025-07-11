@@ -26,6 +26,7 @@ export default function CardStar({ sides = 7, color = "#D0A760" }) {
     const centerX = 50;
     const centerY = 50;
     let pts = "";
+      
 
     const step = Math.PI / spikes;
 
@@ -58,14 +59,14 @@ export default function CardStar({ sides = 7, color = "#D0A760" }) {
       osc.frequency.value = freq;
 
       gain.gain.setValueAtTime(0.0001, now);
-      gain.gain.linearRampToValueAtTime(0.15, now + 0.05);
-      gain.gain.linearRampToValueAtTime(0.0001, now + 1.5);
+      gain.gain.linearRampToValueAtTime(0.15, now + 0.05); // 淡入
+      gain.gain.linearRampToValueAtTime(0.0001, now + 2); // 淡出
 
       osc.connect(gain);
       gain.connect(ctx.destination);
 
       osc.start();
-      osc.stop(now + 1.2);
+      osc.stop(now + 2);
     });
   }, [sides, color]);
 

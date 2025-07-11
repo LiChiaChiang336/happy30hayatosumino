@@ -97,7 +97,7 @@ export default function BoardPage() {
           <select
             value={order}
             onChange={handleOrderChange}
-            className="p-2 bg-[#6760AB] hover:bg-[#544DA1] text-white rounded"
+            className="px-4 py-2 bg-[#6760AB] hover:bg-[#544DA1] text-white rounded text-center items-center"
           >
             <option value="desc">Newest First</option>
             <option value="asc">Oldest First</option>

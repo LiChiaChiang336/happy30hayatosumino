@@ -1,0 +1,66 @@
+.titleContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+  z-index: 10;
+
+  /* ⭐️ 模擬光暈 */
+  filter: drop-shadow(0 0 7px rgba(125, 146, 165, 0.2))
+    drop-shadow(0 0 14px (125, 146, 165, 0.15));
+}
+
+.titleText {
+  font-weight: bold;
+  letter-spacing: 0.2em;
+  line-height: 1.2;
+  font-size: 5vw;
+  color: rgba(125, 146, 165, 0.15); /* ⭐️ 淡灰白 */
+  text-shadow: 0 0 3px #ffffff, /* 小亮光 */ 0 0 6px #7d92a5,
+    /* 冷色調光暈 */ 0 0 12px #7d92a5; /* 再一層擴散 */
+  animation: fadeInOut 7s ease-in-out infinite;
+  animation-fill-mode: both; /* ✅ 新增這行可處理延遲文字一開始出現在畫面上*/
+}
+
+/* 手機：去掉光暈或變很淡 */
+@media (max-width: 640px) {
+  .titleContainer {
+   filter: drop-shadow(0 0 4px rgba(125, 146, 165, 0.1));
+  }
+
+  .titleText {
+    font-size: 6vw; 
+    text-shadow: 0 0 2px #ffffff; /* 小亮光 */
+  }
+}
+
+/* 每行的延遲 */
+.line1 {
+  animation-delay: 0s;
+}
+.line2 {
+  animation-delay: 1.5s;
+}
+.line3 {
+  animation-delay: 3s;
+}
+.line4 {
+  animation-delay: 4.5s;
+}
+
+@keyframes fadeInOut {
+  0%,
+  20% {
+    opacity: 0;
+  }
+  35%,
+  65% {
+    opacity: 1;
+  }
+  80%,
+  100% {
+    opacity: 0;
+  }
+}
