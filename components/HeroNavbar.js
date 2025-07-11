@@ -33,7 +33,7 @@ export default function HeroNavbar() {
       {/* 左邊：網站名稱 */}
       <NavbarContent justify="start">
         <NavbarBrand>
-          <Link href="/" color="foreground" className="font-bold text-2xl">
+          <Link href="/" color="foreground" className="font-bold text-lg sm:text-xl md:text-2xl">
             Happy 30 Hayato Sumino
           </Link>
         </NavbarBrand>
@@ -61,7 +61,7 @@ export default function HeroNavbar() {
               key={item.name}
               href={item.href}
               color="foreground"
-              className="text-base lg:text-xl relative overflow-hidden after:absolute after:left-0 after:bottom-0 after:h-[1px] after:w-0 after:bg-white hover:after:w-full after:transition-all after:duration-300"
+              className="text-base md:text-xl relative overflow-hidden after:absolute after:left-0 after:bottom-0 after:h-[1px] after:w-0 after:bg-white hover:after:w-full after:transition-all after:duration-300"
             >
               {item.name}
             </Link>

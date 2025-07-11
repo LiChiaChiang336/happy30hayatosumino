@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import Card from "@/components/Card";
 import StarBackground from "@/components/StarBackground";
+import DecryptedText from "@/components/DecryptedText";
+import StarBoardIntro from "@/components/StarBoardIntro";
 
 export default function BoardPage() {
   const [messages, setMessages] = useState([]);
@@ -10,7 +12,7 @@ export default function BoardPage() {
   const [lastCreatedAt, setLastCreatedAt] = useState(null); // 分頁用
   const [hasMore, setHasMore] = useState(true); // 沒有更多資料時隱藏按鈕
   const [order, setOrder] = useState("desc"); // 新到舊
-   
+
   const fetchMessages = async (startAfter = null) => {
     try {
       setIsLoading(true);
@@ -74,9 +76,21 @@ export default function BoardPage() {
       <StarBackground starCount={140} />
 
       <div className="mt-20 mb-40 px-4 space-y-14 ">
-        <h1 className="text-center text-2xl font-bold text-white mb-8">
-          Star Board
+        <h1 className="text-center text-4xl font-bold text-white mb-8">
+          <DecryptedText
+            text="Star Board"
+            animateOn="view"
+            revealDirection="start"
+            sequential={true}       // 啟用逐字 reveal
+            speed={100}
+            maxIterations={20}
+            characters="ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*"
+            className="text-white"
+            encryptedClassName="text-gray-400"
+          />
         </h1>
+
+        <StarBoardIntro />
 
         {/* 排序切換 */}
         <div className="flex justify-center mb-8">
