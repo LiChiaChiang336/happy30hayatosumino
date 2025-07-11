@@ -16,6 +16,7 @@ const chordMap = {
 
 export default function CardStar({ sides = 7, color = "#D0A760" }) {
   const [points, setPoints] = useState("");
+    const filterId = `glow-${sides}-${color.replace("#", "")}`;
 
   // 只在 client 算一次星星座標
   useEffect(() => {
@@ -76,11 +77,11 @@ export default function CardStar({ sides = 7, color = "#D0A760" }) {
       onClick={playChord}
     >
       <defs>
-        <filter id="glow">
+        <filter id={filterId}>
           <feDropShadow dx="0" dy="0" stdDeviation="7" floodColor={color} floodOpacity="0.9" />
         </filter>
       </defs>
-      <polygon points={points} fill={color} filter="url(#glow)" />
+      <polygon points={points} fill={color} filter={`url(#${filterId})`}  />
     </svg>
   );
 }

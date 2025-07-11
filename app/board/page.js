@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Card from "@/components/Card";
+import StarBackground from "@/components/StarBackground";
 
 export default function BoardPage() {
   const [messages, setMessages] = useState([]);
@@ -9,7 +10,7 @@ export default function BoardPage() {
   const [lastCreatedAt, setLastCreatedAt] = useState(null); // 分頁用
   const [hasMore, setHasMore] = useState(true); // 沒有更多資料時隱藏按鈕
   const [order, setOrder] = useState("desc"); // 新到舊
-
+   
   const fetchMessages = async (startAfter = null) => {
     try {
       setIsLoading(true);
@@ -69,47 +70,51 @@ export default function BoardPage() {
   };
 
   return (
-    <div className="mt-20 mb-40 px-4 space-y-14 ">
-      <h1 className="text-center text-2xl font-bold text-white mb-8">
-        Star Board
-      </h1>
+    <div className="relative">
+      <StarBackground starCount={140} />
 
-      {/* 排序切換 */}
-      <div className="flex justify-center mb-8">
-        <select
-          value={order}
-          onChange={handleOrderChange}
-          className="p-2 bg-[#6760AB] hover:bg-[#544DA1] text-white rounded"
-        >
-          <option value="desc">Newest First</option>
-          <option value="asc">Oldest First</option>
-        </select>
-      </div>
+      <div className="mt-20 mb-40 px-4 space-y-14 ">
+        <h1 className="text-center text-2xl font-bold text-white mb-8">
+          Star Board
+        </h1>
 
-      {/* 留言卡片 */}
-      {messages.map((msg) => (
-        <Card
-          key={msg.id}
-          nickname={msg.nickname}
-          message={msg.message}
-          date={msg.date}
-          starColor={msg.starColor}
-          starShape={msg.starShape}
-        />
-      ))}
-
-      {/* 分頁按鈕 */}
-      {hasMore && (
-        <div className="flex justify-center my-6">
-          <button
-            onClick={() => fetchMessages(lastCreatedAt)}
-            disabled={isLoading}
-            className="px-4 py-2 bg-[#6760AB] hover:bg-[#544DA1] text-white rounded"
+        {/* 排序切換 */}
+        <div className="flex justify-center mb-8">
+          <select
+            value={order}
+            onChange={handleOrderChange}
+            className="p-2 bg-[#6760AB] hover:bg-[#544DA1] text-white rounded"
           >
-            {isLoading ? "Loading..." : "Load More"}
-          </button>
+            <option value="desc">Newest First</option>
+            <option value="asc">Oldest First</option>
+          </select>
         </div>
-      )}
+
+        {/* 留言卡片 */}
+        {messages.map((msg) => (
+          <Card
+            key={msg.id}
+            nickname={msg.nickname}
+            message={msg.message}
+            date={msg.date}
+            starColor={msg.starColor}
+            starShape={msg.starShape}
+          />
+        ))}
+
+        {/* 分頁按鈕 */}
+        {hasMore && (
+          <div className="flex justify-center my-6">
+            <button
+              onClick={() => fetchMessages(lastCreatedAt)}
+              disabled={isLoading}
+              className="px-4 py-2 bg-[#6760AB] hover:bg-[#544DA1] text-white rounded"
+            >
+              {isLoading ? "Loading..." : "Load More"}
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
