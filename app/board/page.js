@@ -8,13 +8,14 @@ export default function BoardPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [lastCreatedAt, setLastCreatedAt] = useState(null); // 分頁用
   const [hasMore, setHasMore] = useState(true); // 沒有更多資料時隱藏按鈕
+  const [order, setOrder] = useState("desc"); // 新到舊
 
   const fetchMessages = async (startAfter = null) => {
     try {
       setIsLoading(true);
 
-      // ✅ 拼 API 查詢參數
-      let url = `/api/board?limit=10&order=desc`;
+      // 拼 API 查詢參數
+      let url = `/api/board?limit=10&order=${order}`;
       if (startAfter) {
         url += `&startAfter=${encodeURIComponent(startAfter)}`;
       }
@@ -25,7 +26,7 @@ export default function BoardPage() {
       const data = await res.json();
 
       if (!data.messages) {
-        console.error("API response error:", data);
+        // console.error("API response error:", data); // 除錯用
         return;
       }
 
@@ -33,13 +34,18 @@ export default function BoardPage() {
         setHasMore(false); // 沒拿到滿額，表示沒有下一頁
       }
 
-      // ✅ 合併舊留言 + 新留言
-      setMessages((prev) => [...prev, ...data.messages]);
+      // 新增資料前，先過濾掉已存在的 id，避免重複
+      setMessages((prev) => {
+        const newMessages = data.messages.filter(
+          (msg) => !prev.some((m) => m.id === msg.id)
+        );
+        return [...prev, ...newMessages];
+      });
 
-      // ✅ 取得最後一筆的 createdAt
-      const lastMsg = data.messages[data.messages.length - 1];
-      if (lastMsg) {
-        setLastCreatedAt(lastMsg.createdAt);
+      // 不管 asc / desc 都取最後一筆
+      const nextStartAfter = data.messages[data.messages.length - 1]?.createdAt;
+      if (nextStartAfter) {
+        setLastCreatedAt(nextStartAfter);
       }
     } catch (error) {
       console.error("Error fetching messages:", error);
@@ -48,43 +54,37 @@ export default function BoardPage() {
     }
   };
 
-  // 頁面載入時抓第一頁
+  // 初次載入
   useEffect(() => {
     fetchMessages();
-  }, []);
+  }, [order]);
 
-  // const dummyMessages = [
-  //   {
-  //     id: "1",
-  //     nickname: "我是嘉💜",
-  //     message: "我們超棒的😭！また会える日を楽しみにしていますね\n🌟 Take care & stay happy💜！！！💕💕💕\n我們超棒的😭！また会える日を楽しみにしていますね\n🌟 Take care & stay happy💜！！！💕💕💕\n我們超棒的😭！また会える日を楽しみにしていますね\n🌟 Take care & stay happy💜！！！💕💕💕\n",
-  //     date: "2025-07-10",
-  //     starColor: "#6760AB",
-  //     starShape: 13,
-  //   },
-  //   {
-  //     id: "2",
-  //     nickname: "Moonlight",
-  //     message: "Shine bright like the stars. ✨",
-  //     date: "2025-07-10",
-  //     starColor: "#D0A760",
-  //     starShape: 7,
-  //   },
-  //   {
-  //     id: "3",
-  //     nickname: "Comet",
-  //     message: "Across galaxies, your music reaches us.",
-  //     date: "2025-07-09",
-  //     starColor: "#CB6947",
-  //     starShape: 9,
-  //   },
-  // ];
+  // 切換新到舊、舊到新排序時，重新載入
+  const handleOrderChange = (e) => {
+    const newOrder = e.target.value;
+    setOrder(newOrder); // 只改 order，剩下交給 useEffect
+    setMessages([]);
+    setLastCreatedAt(null);
+    setHasMore(true);
+  };
 
   return (
-    <div className="mt-20 mb-20 px-4 space-y-14 ">
+    <div className="mt-20 mb-40 px-4 space-y-14 ">
       <h1 className="text-center text-2xl font-bold text-white mb-8">
         Star Board
       </h1>
+
+      {/* 排序切換 */}
+      <div className="flex justify-center mb-8">
+        <select
+          value={order}
+          onChange={handleOrderChange}
+          className="p-2 bg-[#6760AB] hover:bg-[#544DA1] text-white rounded"
+        >
+          <option value="desc">Newest First</option>
+          <option value="asc">Oldest First</option>
+        </select>
+      </div>
 
       {/* 留言卡片 */}
       {messages.map((msg) => (
@@ -97,16 +97,7 @@ export default function BoardPage() {
           starShape={msg.starShape}
         />
       ))}
-      {/* {dummyMessages.map((msg) => (
-        <Card
-          key={msg.id}
-          nickname={msg.nickname}
-          message={msg.message}
-          date={msg.date}
-          starColor={msg.starColor}
-          starShape={msg.starShape}
-        />
-      ))} */}
+
       {/* 分頁按鈕 */}
       {hasMore && (
         <div className="flex justify-center my-6">
