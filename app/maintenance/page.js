@@ -12,7 +12,7 @@ export default function MaintenancePage() {
             🚧 Site Under Maintenance 🚧
           </h1>
           <p className=" text-sm md:text-lg">
-            We're currently performing scheduled updates. Please check back
+            We are currently performing scheduled updates. Please check back
             soon!
           </p>
           <p className=" text-sm md:text-base text-gray-400">

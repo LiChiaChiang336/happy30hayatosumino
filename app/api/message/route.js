@@ -22,7 +22,8 @@ import { Timestamp } from "firebase-admin/firestore";
  * 防止 XSS：簡單替換 < > & 等符號
  */
 function sanitizeString(str) {
-  return String(str).replace(/[<>&"'`]/g, (char) => {
+  if (typeof str !== "string") return "";
+  return str.replace(/[<>&"'`]/g, (char) => {
     const map = {
       "<": "&lt;",
       ">": "&gt;",
@@ -34,6 +35,7 @@ function sanitizeString(str) {
     return map[char] || char;
   });
 }
+
 
 /**
  * 取得 IP：
