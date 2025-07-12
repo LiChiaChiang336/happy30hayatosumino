@@ -151,7 +151,7 @@ export default function ContentWithModal() {
                 <span className="text-red-500 text-sm md:text-lg">*</span>
               </label>
               <select
-                className="p-2 bg-transparent border-b border-gray-500 text-white text-sm md:text-lg"
+                className="p-2 bg-transparent border-b border-gray-500 text-white text-sm"
                 value={sides}
                 onChange={(e) => setSides(e.target.value)}
               >
@@ -169,7 +169,7 @@ export default function ContentWithModal() {
                 <span className="text-red-500 text-sm md:text-lg">*</span>
               </label>
               <select
-                className="p-2 bg-transparent border-b border-gray-500 text-white text-sm md:text-lg"
+                className="p-2 bg-transparent border-b border-gray-500 text-white text-sm"
                 value={color}
                 onChange={(e) => setColor(e.target.value)}
               >
@@ -183,14 +183,14 @@ export default function ContentWithModal() {
 
             <button
               onClick={playChord}
-              className="p-2  font-bold rounded text-white bg-[#6760AB] hover:bg-[#544DA1] text-sm md:text-lg"
+              className="p-2  font-bold rounded text-white bg-[#6760AB] hover:bg-[#544DA1] text-sm "
             >
               Play Chord ♫
             </button>
              <p className="text-xs text-center text-[#D0A760]">Please turn off silent mode to hear your chord.</p>
 
             <div className="flex flex-col">
-              <label className="mb-1 font-bold text-white text-sm md:text-lg">
+              <label className="mb-1 font-bold text-white text-sm ">
                 Your name{" "}
                 <span className="text-red-500 text-sm md:text-lg">*</span>
               </label>
@@ -311,7 +311,7 @@ export default function ContentWithModal() {
           <div className="mt-4 flex gap-4 w-full max-w-xs ">
             <button
               onClick={closeModal}
-              className="w-36 px-4 py-2 bg-gray-700 rounded text-sm md:text-lg "
+              className="w-36 px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded text-sm md:text-lg "
             >
               Cancel
             </button>
