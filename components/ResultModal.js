@@ -14,7 +14,7 @@ export default function ResultModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-[#0e0e0e] flex justify-center items-center z-50">
+    <div className="fixed inset-0 bg-[#0e0e0e] flex justify-center items-center z-40">
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}

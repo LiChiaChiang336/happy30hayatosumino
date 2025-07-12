@@ -71,7 +71,7 @@ export default function HeroNavbar() {
 
       {/* 手機版展開菜單 */}
       {isMenuOpen && (
-        <div className="absolute top-full left-0 w-full bg-[#0E0E0E] lg:hidden mt-6">
+        <div className="absolute top-full left-0 w-full z-50 bg-[#0E0E0E] lg:hidden mt-6">
           <div className="flex flex-col items-center">
             {menuItems.map((item) => (
               <div key={item.name} className="px-4 py-2">

@@ -20,11 +20,11 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <body className="min-h-screen bg-[#0E0E0E] text-[#ffffff] antialiased">
+      <body className="min-h-screen flex flex-col  bg-[#0E0E0E] text-[#ffffff] antialiased">
         <ModalProvider>
           {!isMaintenance && <HeroNavbar />}
            {!isMaintenance && <FloatingButton />}
-          <main>
+           <main className="flex-grow relative overflow-hidden">
             {/* 這裡調整 */}
             {!isMaintenance && <ContentWithModal />}
             {children}

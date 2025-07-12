@@ -59,7 +59,7 @@ export default function FloatingButton() {
 
       {/* Modal */}
       {/* {isOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-40">
           <div className="bg-[#3e3e3e] p-6 w-11/12 max-w-sm h-[560px] rounded-lg text-white">
             <h2 className="text-lg mb-4">Leave a Message</h2>
             <textarea className="w-full h-32 p-2 text-black" placeholder="Type your message..." />

@@ -14,7 +14,7 @@ export default function HomePage() {
        <HomepageTitle />
       {selectedAgent && (
         <div
-          className="fixed inset-0 backdrop-blur-[2px] bg-opacity-5 flex justify-center items-center z-50"
+          className="fixed inset-0 backdrop-blur-[2px] bg-opacity-5 flex justify-center items-center z-40"
           onClick={() => setSelectedAgent(null)} // 點背景關閉
         >
           <HomepageCard
