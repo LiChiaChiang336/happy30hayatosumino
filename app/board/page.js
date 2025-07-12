@@ -14,6 +14,19 @@ export default function BoardPage() {
   const [order, setOrder] = useState("desc"); // 新到舊
 
   const fetchMessages = async (startAfter = null) => {
+
+    // 防止 0.5 秒內重複請求
+const now = Date.now();
+  const lastFetch = Number(localStorage.getItem("lastMessageFetchTime") || 0);
+
+  if (now - lastFetch < 500) {
+    console.warn("Too frequent: blocked fetch"); // 可換成 toast 提醒
+    return;
+  }
+  localStorage.setItem("lastMessageFetchTime", now);
+
+
+
     try {
       setIsLoading(true);
 

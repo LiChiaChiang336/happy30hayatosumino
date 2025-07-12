@@ -7,7 +7,7 @@ export default function HomepageCardStar({ starShape = 7, starColor = "#D0A760" 
   const filterId = `glow-${starShape}-${starColor.replace("#", "")}`;
 
   useEffect(() => {
-    console.log("[HomepageCardStar] 正在計算 starShape:", starShape, " starColor:", starColor);
+    // console.log("[HomepageCardStar] 正在計算 starShape:", starShape, " starColor:", starColor);
     const spikes = Number(starShape) || 7;
     const outerRadius = 40;
     const innerRadius = 20;
