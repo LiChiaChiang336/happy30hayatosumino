@@ -28,12 +28,12 @@ export default function HeroNavbar() {
     <Navbar
       disableAnimation
       isBordered
-      className="fixed top-0 left-0 right-0 z-50 sm:px-2 py-4 bg-[#0E0E0E]"
+      className="fixed top-0 left-0 right-0 z-50 px-2 py-4 bg-[#0E0E0E]"
     >
       {/* 左邊：網站名稱 */}
       <NavbarContent justify="start">
         <NavbarBrand>
-          <Link href="/" color="foreground" className="font-bold text-lg sm:text-xl md:text-2xl">
+          <Link href="/" color="foreground" className="font-bold text-lg sm:text-xl ">
             Happy 30 Hayato Sumino
           </Link>
         </NavbarBrand>
@@ -61,7 +61,7 @@ export default function HeroNavbar() {
               key={item.name}
               href={item.href}
               color="foreground"
-              className="text-base md:text-xl relative overflow-hidden after:absolute after:left-0 after:bottom-0 after:h-[1px] after:w-0 after:bg-white hover:after:w-full after:transition-all after:duration-300"
+              className="text-base md:text-lg relative overflow-hidden after:absolute after:left-0 after:bottom-0 after:h-[1px] after:w-0 after:bg-white hover:after:w-full after:transition-all after:duration-300"
             >
               {item.name}
             </Link>

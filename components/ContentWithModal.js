@@ -115,7 +115,7 @@ export default function ContentWithModal() {
         <div className="flex flex-col items-center gap-6 p-4">
           <h2 className="font-bold text-xl md:text-2xl leading-relaxed break-words text-center">
             Leave your message as a{" "}
-            <span className="text-yellow-300 drop-shadow-[0_0_6px_rgba(150,200,255,0.9)]">
+            <span className="text-[#D0A760] drop-shadow-[0_0_6px_rgba(150,200,255,0.9)]">
               star
             </span>{" "}
             in the Human Universe.
@@ -187,6 +187,7 @@ export default function ContentWithModal() {
             >
               Play Chord ♫
             </button>
+             <p className="text-xs text-center text-[#D0A760]">Please turn off silent mode to hear your chord.</p>
 
             <div className="flex flex-col">
               <label className="mb-1 font-bold text-white text-sm md:text-xl">

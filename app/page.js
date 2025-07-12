@@ -3,6 +3,7 @@
 import HomepageBackground from "@/components/HomepageBackground";
 import HomepageCard from "@/components/HomepageCard";
 import HomepageTitle from "@/components/HomepageTitle";
+import HomepageSubtitle from "@/components/HomepageSubtitle"; 
 import { useState } from "react";
 
 export default function HomePage() {
@@ -10,8 +11,10 @@ export default function HomePage() {
 
   return (
     <>
+    <div className="relative min-h-screen overflow-hidden"> {/* ⬅️ 加這層全螢幕容器 */}
       <HomepageBackground onStarClick={setSelectedAgent} />
        <HomepageTitle />
+       <HomepageSubtitle />
       {selectedAgent && (
         <div
           className="fixed inset-0 backdrop-blur-[2px] bg-opacity-5 flex justify-center items-center z-40"
@@ -25,8 +28,11 @@ export default function HomePage() {
             starShape={selectedAgent.starShape}
             onClose={() => setSelectedAgent(null)} // 傳給關閉按鈕
           />
+          
         </div>
+        
       )}
+       </div>
     </>
   );
 }

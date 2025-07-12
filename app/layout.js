@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
         <ModalProvider>
           {!isMaintenance && <HeroNavbar />}
            {!isMaintenance && <FloatingButton />}
-           <main className="flex-grow relative overflow-hidden">
+           <main className="flex-grow relative overflow-hidden flex-1">
             {/* 這裡調整 */}
             {!isMaintenance && <ContentWithModal />}
             {children}
