@@ -280,7 +280,7 @@ export default function ContentWithModal() {
             </div>
           </div>
 
-          <div className="mt-4 flex flex-col justify-end gap-4 md:px-6">
+          <div className="mt-4 flex flex-col justify-end gap-3 md:px-6">
             <hr className="border-[#D0A760] w-full " />
             <p className="font-bold text-sm md:text-lg text-[#D0A760] leading-relaxed break-words">
               ・Each person may leave{" "}
@@ -288,6 +288,9 @@ export default function ContentWithModal() {
                 only one message
               </span>{" "}
               to light up the stars. Share your most heartfelt words.
+            </p>
+            <p className="font-bold text-sm md:text-lg text-[#D0A760] leading-relaxed break-words">
+              ・You can submit your message until <span className="text-[#CB6947] font-black">August 14, 2025 (UTC+8).</span>
             </p>
             <p className="font-bold text-sm md:text-lg text-[#D0A760] leading-relaxed break-words">
               ・This is a public message board. We record only the number of

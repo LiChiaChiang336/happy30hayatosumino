@@ -76,7 +76,7 @@ export async function POST(request) {
 
     const verifyData = await verifyRes.json();
     if (!verifyData.success) {
-      console.error("reCAPTCHA failed:", verifyData);
+      // console.error("reCAPTCHA failed:", verifyData);
       return Response.json({ error: "reCAPTCHA failed" }, { status: 400 });
     }
     // 這整段都給 reCAPTCHA 驗證
@@ -186,7 +186,7 @@ export async function POST(request) {
 
     return Response.json({ success: true });
   } catch (error) {
-    console.error("Error saving message:", error);
+    // console.error("Error saving message:", error);
     return Response.json({ error: "Server error" }, { status: 500 });
   }
 }

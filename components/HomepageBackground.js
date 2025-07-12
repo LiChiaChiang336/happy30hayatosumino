@@ -129,7 +129,7 @@ export default function HomepageBackground({ onStarClick }) {
   const audioCtxRef = useRef(null);
   const agentsRef = useRef([]); // ⭐️ 存星星資料
 
-  console.log("[Home] agents:", agentsRef.current); // ← 放這裡，確認 starColor、spikeCount 正確
+  // console.log("[Home] agents:", agentsRef.current); // ← 放這裡，確認 starColor、spikeCount 正確
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -150,7 +150,7 @@ export default function HomepageBackground({ onStarClick }) {
           (msg) => new Agent(msg, canvas, isMobile)
         );
       } catch (err) {
-        console.error("[Home] API error:", err);
+        // console.error("[Home] API error:", err);
       }
     }
     fetchData();

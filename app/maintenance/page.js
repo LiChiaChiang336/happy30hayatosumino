@@ -1,8 +1,25 @@
+"use client";
+
+import StarBackground from "@/components/StarBackground";
+
 export default function MaintenancePage() {
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-[#0e0e0e] text-white">
-      <h1 className="text-3xl font-bold mb-4">Under Maintenance</h1>
-      <p className="text-xl">We are performing some updates. Please check back later.</p>
+    <div className="relative min-h-screen overflow-hidden">
+      <StarBackground starCount={140} />
+      <div className="relative z-10 flex items-center justify-center min-h-screen text-white px-6">
+        <div className="text-center space-y-4">
+          <h1 className="text-2xl md:text-4xl font-bold">
+            🚧 Site Under Maintenance 🚧
+          </h1>
+          <p className=" text-sm md:text-lg">
+            We're currently performing scheduled updates. Please check back
+            soon!
+          </p>
+          <p className=" text-sm md:text-base text-gray-400">
+            If you have any questions, feel free to contact us via email.
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

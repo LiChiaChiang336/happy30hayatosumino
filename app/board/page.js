@@ -23,7 +23,7 @@ export default function BoardPage() {
         url += `&startAfter=${encodeURIComponent(startAfter)}`;
       }
 
-      console.log("[BoardPage] 讀取留言 API:", url);
+      // .log("[BoardPage] 讀取留言 API:", url);
 
       const res = await fetch(url);
       const data = await res.json();
@@ -51,7 +51,7 @@ export default function BoardPage() {
         setLastCreatedAt(nextStartAfter);
       }
     } catch (error) {
-      console.error("Error fetching messages:", error);
+      // console.error("Error fetching messages:", error);
     } finally {
       setIsLoading(false);
     }
@@ -75,7 +75,7 @@ export default function BoardPage() {
     <div className="relative">
       <StarBackground starCount={140} />
 
-      <div className="mt-20 mb-40 px-4 space-y-14 ">
+      <div className="mt-20 mb-44 px-4 space-y-14 ">
         <h1 className="text-center text-4xl font-bold text-white mb-8">
           <DecryptedText
             text="Star Board"

@@ -69,8 +69,8 @@ export default function ResultModal({
               transition={{ duration: 1.5, ease: "easeInOut" }}
               className="text-lg md:text-xl font-bold text-[#D0A760]"
             >
-              You’ve already submitted a message today. <br />
-              Please try again tomorrow!
+              You’ve already submitted a message. <br />
+              If you have any question please contact us!
             </motion.p>
             <button
               className="px-4 py-2 bg-[#6760AB] hover:bg-[#544DA1] text-sm md:text-xl  rounded mt-2"

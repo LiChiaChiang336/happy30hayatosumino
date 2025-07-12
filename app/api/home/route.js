@@ -19,7 +19,7 @@ export async function GET() {
       status: 200,
     });
   } catch (error) {
-    console.error("[API Error] Get Homepage Messages:", error);
+    // console.error("[API Error] Get Homepage Messages:", error);
     return new Response("Internal Server Error", { status: 500 });
   }
 }
