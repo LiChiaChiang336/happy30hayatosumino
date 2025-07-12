@@ -182,7 +182,7 @@ export default function HomepageBackground({ onStarClick }) {
           hoverBlockRef.current = true;
           setTimeout(() => {
             hoverBlockRef.current = false;
-          }, 300);
+          }, 600);
 
           playChord(audioCtxRef.current, agent.data.starShape);
           onStarClick(agent.data);
