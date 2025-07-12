@@ -113,7 +113,7 @@ export default function ContentWithModal() {
       {/* reCAPTCHA機器人用 end*/}
       <Modal isOpen={isOpen} onClose={closeModal}>
         <div className="flex flex-col items-center gap-6 p-4">
-          <h2 className="font-bold text-xl md:text-2xl leading-relaxed break-words text-center">
+          <h2 className="font-bold text-lg md:text-2xl leading-relaxed break-words text-center">
             Leave your message as a{" "}
             <span className="text-[#D0A760] drop-shadow-[0_0_6px_rgba(150,200,255,0.9)]">
               star
@@ -146,12 +146,12 @@ export default function ContentWithModal() {
 
           <div className="flex flex-col gap-4 w-full max-w-xs">
             <div className="flex flex-col">
-              <label className="mb-1 font-bold text-white text-sm md:text-xl">
+              <label className="mb-1 font-bold text-white text-sm md:text-lg">
                 Select your star shape / chord{" "}
-                <span className="text-red-500 text-sm md:text-xl">*</span>
+                <span className="text-red-500 text-sm md:text-lg">*</span>
               </label>
               <select
-                className="p-2 bg-transparent border-b border-gray-500 text-white text-sm md:text-xl"
+                className="p-2 bg-transparent border-b border-gray-500 text-white text-sm md:text-lg"
                 value={sides}
                 onChange={(e) => setSides(e.target.value)}
               >
@@ -164,12 +164,12 @@ export default function ContentWithModal() {
             </div>
 
             <div className="flex flex-col">
-              <label className="mb-1 font-bold text-white text-sm md:text-xl">
+              <label className="mb-1 font-bold text-white text-sm md:text-lg">
                 Select your star color{" "}
-                <span className="text-red-500 text-sm md:text-xl">*</span>
+                <span className="text-red-500 text-sm md:text-lg">*</span>
               </label>
               <select
-                className="p-2 bg-transparent border-b border-gray-500 text-white text-sm md:text-xl"
+                className="p-2 bg-transparent border-b border-gray-500 text-white text-sm md:text-lg"
                 value={color}
                 onChange={(e) => setColor(e.target.value)}
               >
@@ -183,16 +183,16 @@ export default function ContentWithModal() {
 
             <button
               onClick={playChord}
-              className="p-2  font-bold rounded text-white bg-[#6760AB] hover:bg-[#544DA1] text-sm md:text-xl"
+              className="p-2  font-bold rounded text-white bg-[#6760AB] hover:bg-[#544DA1] text-sm md:text-lg"
             >
               Play Chord ♫
             </button>
              <p className="text-xs text-center text-[#D0A760]">Please turn off silent mode to hear your chord.</p>
 
             <div className="flex flex-col">
-              <label className="mb-1 font-bold text-white text-sm md:text-xl">
+              <label className="mb-1 font-bold text-white text-sm md:text-lg">
                 Your name{" "}
-                <span className="text-red-500 text-sm md:text-xl">*</span>
+                <span className="text-red-500 text-sm md:text-lg">*</span>
               </label>
               <input
                 type="text"
@@ -205,7 +205,7 @@ export default function ContentWithModal() {
                 }}
                 className={`p-2 bg-transparent border-b ${
                   nameError ? "border-red-500" : "border-gray-500"
-                } text-white text-sm md:text-xl`}
+                } text-white text-sm md:text-lg`}
               />
               <div className="flex justify-between items-baseline text-sm text-gray-400 mt-1 ">
                 <span className="leading-none">Max 20 characters</span>
@@ -244,9 +244,9 @@ export default function ContentWithModal() {
             </div>
 
             <div className="flex flex-col">
-              <label className="mb-1 font-bold text-white text-sm md:text-xl">
+              <label className="mb-1 font-bold text-white text-sm md:text-lg">
                 Your message{" "}
-                <span className="text-red-500 text-sm md:text-xl">*</span>
+                <span className="text-red-500 text-sm md:text-lg">*</span>
               </label>
               <textarea
                 maxLength={200}
@@ -258,7 +258,7 @@ export default function ContentWithModal() {
                 }}
                 className={`p-2 bg-transparent border ${
                   messageError ? "border-red-500" : "border-gray-500"
-                } text-white text-sm md:text-xl resize-none`}
+                } text-white text-sm resize-none`}
                 rows={6}
               />
               <div className="flex justify-between items-baseline text-sm text-gray-400 mt-1">
@@ -283,23 +283,23 @@ export default function ContentWithModal() {
 
           <div className="mt-4 flex flex-col justify-end gap-3 md:px-6">
             <hr className="border-[#D0A760] w-full " />
-            <p className="font-bold text-sm md:text-lg text-[#D0A760] leading-relaxed break-words">
+            <p className="font-bold text-sm md:text-base text-[#D0A760] leading-relaxed break-words">
               ・Each person may leave{" "}
               <span className="text-[#CB6947] font-black">
                 only one message
               </span>{" "}
               to light up the stars. Share your most heartfelt words.
             </p>
-            <p className="font-bold text-sm md:text-lg text-[#D0A760] leading-relaxed break-words">
+            <p className="font-bold text-sm md:text-base text-[#D0A760] leading-relaxed break-words">
               ・You can submit your message until <span className="text-[#CB6947] font-black">August 14, 2025 (UTC+8).</span>
             </p>
-            <p className="font-bold text-sm md:text-lg text-[#D0A760] leading-relaxed break-words">
+            <p className="font-bold text-sm md:text-base text-[#D0A760] leading-relaxed break-words">
               ・This is a public message board. We record only the number of
               messages to prevent duplicate posts and do not collect your
               personal information. For your safety, please avoid sharing any
               private or sensitive data.
             </p>
-            <p className="font-bold text-sm md:text-lg text-[#D0A760] leading-relaxed break-words">
+            <p className="font-bold text-sm md:text-base text-[#D0A760] leading-relaxed break-words">
               ・If you have any questions, please take a screenshot and email us
               at{" "}
               <a href="mailto:lichiachiang336@gmail.com" className="underline">
@@ -311,7 +311,7 @@ export default function ContentWithModal() {
           <div className="mt-4 flex gap-4 w-full max-w-xs ">
             <button
               onClick={closeModal}
-              className="w-36 px-4 py-2 bg-gray-700 rounded text-sm md:text-xl "
+              className="w-36 px-4 py-2 bg-gray-700 rounded text-sm md:text-lg "
             >
               Cancel
             </button>
@@ -398,7 +398,7 @@ export default function ContentWithModal() {
                 // );
               }}
               disabled={isSubmitting}
-              className="w-36 px-4 py-2 bg-[#6760AB] rounded hover:bg-[#544DA1] text-sm md:text-xl flex justify-center items-center"
+              className="w-36 px-4 py-2 bg-[#6760AB] rounded hover:bg-[#544DA1] text-sm md:text-lg flex justify-center items-center"
             >
               {isSubmitting ? (
                 <>
