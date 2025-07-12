@@ -190,7 +190,7 @@ export default function ContentWithModal() {
              <p className="text-xs text-center text-[#D0A760]">Please turn off silent mode to hear your chord.</p>
 
             <div className="flex flex-col">
-              <label className="mb-1 font-bold text-white text-sm ">
+              <label className="mb-1 font-bold text-white text-sm md:text-lg">
                 Your name{" "}
                 <span className="text-red-500 text-sm md:text-lg">*</span>
               </label>
@@ -205,7 +205,7 @@ export default function ContentWithModal() {
                 }}
                 className={`p-2 bg-transparent border-b ${
                   nameError ? "border-red-500" : "border-gray-500"
-                } text-white text-sm md:text-lg`}
+                } text-white text-sm`}
               />
               <div className="flex justify-between items-baseline text-sm text-gray-400 mt-1 ">
                 <span className="leading-none">Max 20 characters</span>
