@@ -32,7 +32,7 @@
 
   .titleText {
     font-size: 6vw; 
-    text-shadow: 0 0 2px #ffffff; /* 小亮光 */
+    text-shadow: 0 0 1px #ffffff; /* 小亮光 */
   }
 }
 

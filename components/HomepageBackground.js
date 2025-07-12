@@ -73,12 +73,10 @@ class Agent {
     ctx.translate(this.pos.x, this.pos.y);
     ctx.rotate(this.rotation);
 
-    
-    const spikeCount = this.data.starShape || 7;  // 如果 spikeCount 沒有，預設 7
+    const spikeCount = this.data.starShape || 7; // 如果 spikeCount 沒有，預設 7
     const boost = 1 + this.hoverProgress * 0.6;
     const innerR = this.radius * this.innerRatio;
     const outerR = this.radius * 2.4 * boost;
-
 
     ctx.beginPath();
     for (let i = 0; i < spikeCount * 2; i++) {
@@ -128,7 +126,7 @@ export default function HomepageBackground({ onStarClick }) {
   const canvasRef = useRef(null);
   const audioCtxRef = useRef(null);
   const agentsRef = useRef([]); // ⭐️ 存星星資料
-
+  const hoverBlockRef = useRef(false); // 用來阻擋 hover 播放
   // console.log("[Home] agents:", agentsRef.current); // ← 放這裡，確認 starColor、spikeCount 正確
 
   useEffect(() => {
@@ -158,9 +156,19 @@ export default function HomepageBackground({ onStarClick }) {
     /* === 🖱️ 滑鼠事件 === */
     const handleMouseMove = (e) => {
       const mouse = new Vector(e.clientX, e.clientY);
-      agentsRef.current.forEach((agent) => {
+      const agents = agentsRef.current;
+
+      agents.forEach((agent) => {
         const dist = mouse.getDistance(agent.pos);
-        agent.hoverTarget = dist < agent.radius * 3 ? 1 : 0;
+        const isHovering = dist < agent.radius * 3;
+        const wasHovering = agent.hoverTarget === 1;
+
+        agent.hoverTarget = isHovering ? 1 : 0;
+
+        // 只有在不是 click 後短時間內，才播放 hover 聲音
+        if (isHovering && !wasHovering && !hoverBlockRef.current) {
+          playChord(audioCtxRef.current, agent.data.starShape);
+        }
       });
     };
 
@@ -170,6 +178,12 @@ export default function HomepageBackground({ onStarClick }) {
       for (let agent of agents) {
         const dist = mouse.getDistance(agent.pos);
         if (dist < agent.radius * 3) {
+          // 點擊時短暫阻擋 hover 播放
+          hoverBlockRef.current = true;
+          setTimeout(() => {
+            hoverBlockRef.current = false;
+          }, 300);
+
           playChord(audioCtxRef.current, agent.data.starShape);
           onStarClick(agent.data);
           return;
