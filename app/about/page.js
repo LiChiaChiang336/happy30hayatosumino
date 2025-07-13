@@ -88,7 +88,7 @@ export default function InspirationPage() {
           </section>
 
           {/* 第四區塊 */}
-          <section className=" snap-center min-h-[70vh] flex items-center justify-center px-6">
+          <section className=" snap-center min-h-[70vh] md:min-h-[80vh] flex items-center justify-center px-6">
             <div className="text-center space-y-4 w-11/12 max-w-md mx-auto">
               <h2 className="text-xl md:text-2xl font-bold">角野隼斗さん</h2>
               <h2 className="text-lg md:text-xl font-bold">
