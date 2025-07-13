@@ -51,7 +51,7 @@ class Agent {
       (Math.random() - 0.5) * 0.6,
       (Math.random() - 0.5) * 0.6
     );
-    this.radius = isMobile ? Math.random() * 4 + 4 : Math.random() * 7 + 7; // 手機 → 4~8px，其他 → 7~14px
+    this.radius = isMobile ? Math.random() * 4 + 4 : Math.random() * 7 + 6; // 手機 → 4~8px，其他 → 7~14px
     this.innerRatio = 0.5;
     this.rotation = Math.random() * Math.PI * 2;
     this.rotationSpeed = (Math.random() - 0.5) * 0.01;
@@ -206,7 +206,7 @@ export default function HomepageBackground({ onStarClick }) {
 
       // console.log("[Animate] agents:", agents); // ← 每一幀都檢查
 
-      const maxDistance = isMobile ? 90 : 230;
+      const maxDistance = isMobile ? 90 : 160;
       const nearOpacity = 0.8;
       const farOpacity = 0.2;
       const nearLineWidth = isMobile ? 1.2 : 2;
