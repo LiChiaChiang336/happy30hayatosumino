@@ -422,7 +422,7 @@ export default function ContentWithModal() {
               className="w-36 px-4 py-2 bg-[#6760AB] rounded hover:bg-[#544DA1] text-sm md:text-lg flex justify-center items-center"
             >
               {isEventClosed ? (
-                "Message board closed"
+                "Event Ended"
               ) : isSubmitting ? (
                 <>
                   <svg

@@ -129,6 +129,10 @@ export default function HomepageBackground({ onStarClick }) {
   const hoverBlockRef = useRef(false); // 用來阻擋 hover 播放
   // console.log("[Home] agents:", agentsRef.current); // ← 放這裡，確認 starColor、spikeCount 正確
 
+  // 用來存「全部星星」與「出現動畫的計時器」
+  const allAgentsRef = useRef([]);
+  const revealTimerRef = useRef(null);
+
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -143,10 +147,32 @@ export default function HomepageBackground({ onStarClick }) {
     async function fetchData() {
       try {
         const res = await fetch("/api/home");
-        const { messages } = await res.json();
-        agentsRef.current = messages.map(
+        const { messages = [] } = await res.json();
+
+        // 1.先把所有星星 Agent 建好，放到 allAgentsRef
+        const allAgents = messages.map(
           (msg) => new Agent(msg, canvas, isMobile)
         );
+        allAgentsRef.current = allAgents;
+
+        // 2.一開始畫面先沒有星星
+        agentsRef.current = [];
+
+        // 3.如果之前有計時器先清掉
+        if (revealTimerRef.current) {
+          clearInterval(revealTimerRef.current);
+        }
+
+        // 4.每隔 80ms 加入一顆星星
+        let index = 0;
+        revealTimerRef.current = setInterval(() => {
+          if (index >= allAgentsRef.current.length) {
+            clearInterval(revealTimerRef.current);
+            return;
+          }
+          agentsRef.current.push(allAgentsRef.current[index]);
+          index += 1;
+        }, 50); // ← 可以調節速度：50~120ms 都可以試
       } catch (err) {
         // console.error("[Home] API error:", err);
       }
@@ -253,6 +279,9 @@ export default function HomepageBackground({ onStarClick }) {
       canvas.removeEventListener("mousemove", handleMouseMove);
       canvas.removeEventListener("click", handleClick);
       audioCtxRef.current?.close();
+      if (revealTimerRef.current) {
+        clearInterval(revealTimerRef.current);
+      }
     };
   }, [onStarClick]);
 

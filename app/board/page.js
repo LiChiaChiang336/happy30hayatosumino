@@ -89,6 +89,7 @@ const now = Date.now();
       <StarBackground starCount={140} />
 
       <div className="mt-20 mb-44 px-4 space-y-14 ">
+       <section className="flex flex-col items-center md:gap-8 h-[380px] md:h-[400px] lg:h-[400px] overflow-hidden ">
         <h1 className="text-center text-4xl font-bold text-white mb-8">
           <DecryptedText
             text="Star Board"
@@ -104,6 +105,7 @@ const now = Date.now();
         </h1>
 
         <StarBoardIntro />
+        </section>
 
         {/* 排序切換 */}
         <div className="flex justify-center mb-8">

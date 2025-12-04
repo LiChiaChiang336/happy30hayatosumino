@@ -81,7 +81,7 @@ export default function InspirationPage() {
                 In this universe, each star shape represents a chord. Everyone
                 can choose a star with 7 to 14 points, each corresponding to one
                 of eight chords, inspired by Hayato Sumino&apos;s Human
-                Universe. And of course, there&apos;s a mysterious ninth chord
+                Universe. And of course, there&apos;s a mysterious 9th chord
                 hidden somewhere—waiting to be discovered.
               </p>
             </div>
