@@ -11,7 +11,7 @@ export default function HomePage() {
 
   return (
     <>
-    <div className="relative min-h-screen overflow-hidden"> {/* ⬅️ 加這層全螢幕容器 */}
+    <div className="relative h-[100dvh] overflow-hidden"> {/* ⬅ 加這層全螢幕容器 */}
       <HomepageBackground onStarClick={setSelectedAgent} />
        <HomepageTitle />
        <HomepageSubtitle />

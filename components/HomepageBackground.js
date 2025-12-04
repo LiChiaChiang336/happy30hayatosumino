@@ -181,7 +181,9 @@ export default function HomepageBackground({ onStarClick }) {
 
     /* === 🖱️ 滑鼠事件 === */
     const handleMouseMove = (e) => {
-      const mouse = new Vector(e.clientX, e.clientY);
+      const rect = canvas.getBoundingClientRect();
+      const mouse = new Vector(e.clientX - rect.left, e.clientY - rect.top);
+
       const agents = agentsRef.current;
 
       agents.forEach((agent) => {
@@ -199,7 +201,12 @@ export default function HomepageBackground({ onStarClick }) {
     };
 
     const handleClick = (e) => {
-      const mouse = new Vector(e.clientX, e.clientY);
+      const rect = canvas.getBoundingClientRect();
+  const mouse = new Vector(
+    e.clientX - rect.left,
+    e.clientY - rect.top
+  );
+  
       const agents = agentsRef.current;
       for (let agent of agents) {
         const dist = mouse.getDistance(agent.pos);
@@ -285,5 +292,10 @@ export default function HomepageBackground({ onStarClick }) {
     };
   }, [onStarClick]);
 
-  return <canvas ref={canvasRef} className="fixed inset-0 z-0" />;
+  return (
+    <canvas
+      ref={canvasRef}
+      className="fixed left-0 right-0 bottom-0 top-16 z-0"
+    />
+  );
 }
