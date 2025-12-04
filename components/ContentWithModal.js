@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { ModalContext } from "./ModalContext";
 import Modal from "./Modal";
 import ResultModal from "./ResultModal";
@@ -11,6 +11,9 @@ const getTodayString = () => {
   const today = new Date();
   return today.toISOString().split("T")[0]; // "2025-07-10"
 };
+
+// 活動截止時間：超過這個時間，前端就視為「活動已結束」
+const EVENT_END_AT = new Date("2025-08-15T00:00:00+08:00");
 
 export default function ContentWithModal() {
   const { isOpen, closeModal } = useContext(ModalContext);
@@ -27,6 +30,12 @@ export default function ContentWithModal() {
   const [showResultModal, setShowResultModal] = useState(false); // 送出成功或失敗的的 modal
   const [resultType, setResultType] = useState("success"); // 送出成功或失敗的的 modal "success" or "alreadySubmitted"
   const recaptchaRef = useRef(null); // reCAPTCHA機器人用
+  const [isEventClosed, setIsEventClosed] = useState(false); // 活動截止後
+
+  useEffect(() => {
+    const now = new Date();
+    setIsEventClosed(now > EVENT_END_AT);
+  }, []);
 
   const colorOptions = [
     { hex: "#D0A760", name: "SOLARI" },
@@ -187,7 +196,9 @@ export default function ContentWithModal() {
             >
               Play Chord ♫
             </button>
-             <p className="text-xs text-center text-[#D0A760]">Please turn off silent mode to hear your chord.</p>
+            <p className="text-xs text-center text-[#D0A760]">
+              Please turn off silent mode to hear your chord.
+            </p>
 
             <div className="flex flex-col">
               <label className="mb-1 font-bold text-white text-sm md:text-lg">
@@ -291,7 +302,10 @@ export default function ContentWithModal() {
               to light up the stars. Share your most heartfelt words.
             </p>
             <p className="font-bold text-sm md:text-base text-[#D0A760] leading-relaxed break-words">
-              ・You can submit your message until <span className="text-[#CB6947] font-black">August 14, 2025 (UTC+8).</span>
+              ・You can submit your message until{" "}
+              <span className="text-[#CB6947] font-black">
+                August 14, 2025 (UTC+8).
+              </span>
             </p>
             <p className="font-bold text-sm md:text-base text-[#D0A760] leading-relaxed break-words">
               ・This is a public message board. We record only the number of
@@ -319,6 +333,13 @@ export default function ContentWithModal() {
             {/* Submit 按鈕 onClick 新增驗證邏輯 */}
             <button
               onClick={async () => {
+                // 若活動已結束：不再真的送出，只顯示 eventClosed 提示
+                if (isEventClosed) {
+                  setResultType("eventClosed");
+                  setShowResultModal(true);
+                  return;
+                }
+
                 // 這是要測試一天留言一次
                 const today = getTodayString();
                 const storedDate = localStorage.getItem("messageSubmitted");
@@ -400,7 +421,9 @@ export default function ContentWithModal() {
               disabled={isSubmitting}
               className="w-36 px-4 py-2 bg-[#6760AB] rounded hover:bg-[#544DA1] text-sm md:text-lg flex justify-center items-center"
             >
-              {isSubmitting ? (
+              {isEventClosed ? (
+                "Message board closed"
+              ) : isSubmitting ? (
                 <>
                   <svg
                     className="animate-spin h-6 w-6 text-white"

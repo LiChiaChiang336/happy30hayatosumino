@@ -7,6 +7,9 @@ import { adminDb } from "@/lib/firebase-admin";
 // 新增這行，取得 admin SDK 的 Timestamp
 import { Timestamp } from "firebase-admin/firestore";
 
+// 活動截止時間：超過這個時間就不接受任何新留言（後端最終保險）
+const EVENT_END_AT = new Date("2025-08-15T00:00:00+08:00");
+
 // 原本是 firebase/firestore (client SDK)
 // import {
 //   collection,
@@ -36,7 +39,6 @@ function sanitizeString(str) {
   });
 }
 
-
 /**
  * 取得 IP：
  * - Cloudflare / Vercel：x-forwarded-for
@@ -53,6 +55,15 @@ function getClientIp(request) {
 
 export async function POST(request) {
   try {
+    // 後端時間判斷：活動結束後不再接受任何留言
+    const now = new Date();
+    if (now > EVENT_END_AT) {
+      return Response.json(
+        { success: false, error: "event-closed" },
+        { status: 403 }
+      );
+    }
+
     const body = await request.json();
 
     /**

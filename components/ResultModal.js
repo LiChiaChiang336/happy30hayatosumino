@@ -23,6 +23,7 @@ export default function ResultModal({
       >
         {type === "success" ? (
           <>
+            {/* 留言成功畫面（原樣保留） */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -44,7 +45,7 @@ export default function ResultModal({
                 onClick={() => {
                   closeResultModal(); // 關掉 ResultModal
                   closeMainModal(); // 關掉留言 Modal
-                   router.push("/");// 去首頁
+                  router.push("/"); // 去首頁
                 }}
               >
                 Home Page →
@@ -61,8 +62,54 @@ export default function ResultModal({
               </button>
             </div>
           </>
+        ) : type === "eventClosed" ? (
+          <>
+            {/* 活動已結束畫面 */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1.5, ease: "easeInOut" }}
+              className="space-y-3"
+            >
+              <p className="text-lg md:text-xl font-bold text-[#D0A760]">
+                The message board has closed.
+              </p>
+              <p className="text-base leading-relaxed">
+                The Human Universe message board accepted messages until{" "}
+                <span className="font-bold text-[#CB6947]">
+                  August 14, 2025 (UTC+8).
+                </span>{" "}
+                You can still explore the stars and read all the messages left
+                by fans.
+              </p>
+            </motion.div>
+
+            <div className="flex justify-center gap-4 mt-4">
+              <button
+                className="px-4 py-2 bg-[#84B2DB] hover:bg-[#5B93C4] rounded"
+                onClick={() => {
+                  closeResultModal();
+                  closeMainModal();
+                  router.push("/");
+                }}
+              >
+                Home Page →
+              </button>
+              <button
+                className="px-4 py-2 bg-[#6760AB] hover:bg-[#544DA1] rounded"
+                onClick={() => {
+                  closeResultModal();
+                  closeMainModal();
+                  router.push("/board");
+                }}
+              >
+                Star Board →
+              </button>
+            </div>
+          </>
         ) : (
           <>
+            {/* 已留言過畫面（維持原本的 alreadySubmitted） */}
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
