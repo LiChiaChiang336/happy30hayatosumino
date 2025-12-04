@@ -31,9 +31,6 @@ function sanitizeString(str) {
       "<": "&lt;",
       ">": "&gt;",
       "&": "&amp;",
-      '"': "&quot;",
-      "'": "&#39;",
-      "`": "&#96;",
     };
     return map[char] || char;
   });
